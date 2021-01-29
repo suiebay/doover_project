@@ -1,4 +1,3 @@
-import 'package:doover_project_test/core/consts/text_styles.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatefulWidget {
@@ -27,8 +26,7 @@ class _MainScreenState extends State<MainScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-              _widgetTitles[_currentView],
-            style: DooverTextStyles.kAppBarTextStyle,
+              _widgetTitles[_currentView]
           ),
         ),
         body: _bodyWidgets.elementAt(_currentView),
