@@ -20,3 +20,16 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
+
+  fonts:
+    - family: MuseoRegular
+      fonts:
+        - asset: assets/fonts/MuseoSansCyrl_0.otf
+
+    - family: Museo500
+      fonts:
+        - asset: assets/fonts/MuseoSansCyrl_1.otf
+
+    - family: MuseoBold
+      fonts:
+        - asset: assets/fonts/MuseoSansCyrl_2.otf
