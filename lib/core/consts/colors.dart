@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 
 class DooverColors {
-  static const Color kScaffoldBackgroundColor = Color(0xFFE5E5E5);
+  static const Color kScaffoldBackgroundColor = Color(0xFFF8F8FB);
 
   static const Color kCardBackgroundColor = Color(0xFFFFFFFF);
 
