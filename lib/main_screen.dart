@@ -1,3 +1,4 @@
+import 'package:doover_project_test/core/widgets/nav_bar_item_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'core/consts/colors.dart';
@@ -14,14 +15,14 @@ class _MainScreenState extends State<MainScreen> {
   final List<Widget> _bodyWidgets = [
     LaundryListView(),
     ProfilePage(),
-    BasketPage(),
+    BasketPage()
   ];
 
-  final List<String> _widgetTitles = [
-    'Прачечная',
-    'Профиль',
-    'Корзина',
-  ];
+  void refresh(int currentView) {
+    setState(() {
+      _currentView = currentView;
+    });
+  }
 
   int _currentView = 0;
 
@@ -29,30 +30,22 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: DooverColors.kScaffoldBackgroundColor,
-      body: _bodyWidgets.elementAt(_currentView),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _currentView,
-        selectedItemColor: Colors.black87,
-        onTap: (int index) {
-          setState(() {
-            _currentView = index;
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: _widgetTitles[0],
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.panorama_rounded),
-            label: _widgetTitles[1],
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.check_box),
-            label: _widgetTitles[2],
-          ),
-        ],
+      body: Stack(children: [_bodyWidgets.elementAt(_currentView)]),
+      bottomNavigationBar: Material(
+        elevation: 30,
+        child: Container(
+            height: 53,
+            color: Colors.white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                NavBarItemWidget('assets/laundry.svg', 'Прачечная', _currentView, refresh: refresh),
+                NavBarItemWidget('assets/profile.svg', 'Профиль', _currentView, refresh: refresh),
+                NavBarItemWidget('assets/basket.svg', 'Корзина', _currentView, refresh: refresh),
+              ],
+            )
+        ),
       ),
     );
   }

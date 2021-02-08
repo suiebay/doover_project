@@ -1,3 +1,4 @@
+import 'package:doover_project_test/core/consts/colors.dart';
 import 'package:doover_project_test/core/injection_container.dart';
 import 'package:doover_project_test/core/widgets/app_bar.dart';
 import 'package:doover_project_test/core/widgets/divider.dart';
@@ -23,6 +24,7 @@ class _ProfilePageState extends State<ProfilePage> {
       child: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) {
           return Scaffold(
+            backgroundColor: DooverColors.kScaffoldBackgroundColor,
             appBar: PreferredSize(
               preferredSize: Size(
                 MediaQuery.of(context).size.width,
@@ -32,7 +34,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             body:
             state is ProfileLoading
-              ? Center(child: CircularProgressIndicator())
+              ? Center(child: CupertinoActivityIndicator(radius: 15))
               : state is ProfileFailure
               ? Text(state.message)
               : state is ProfileSuccess

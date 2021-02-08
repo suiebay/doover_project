@@ -2,6 +2,7 @@ import 'package:doover_project_test/core/consts/colors.dart';
 import 'package:doover_project_test/core/widgets/app_bar.dart';
 import 'package:doover_project_test/features/laundry/data/models/laundry.dart';
 import 'package:doover_project_test/features/laundry/presentation/widgets/product_card.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:doover_project_test/features/laundry/controllers/laundry_bloc/laundry_bloc.dart';
@@ -27,7 +28,7 @@ class ProductsPage extends StatelessWidget {
       body: BlocBuilder<LaundryBloc, LaundryState>(
         builder: (context, state) {
           if(state is LaundryLoading) {
-            return Center(child: CircularProgressIndicator());
+            return Center(child: CupertinoActivityIndicator(radius: 15));
           }
           if(state is LaundryFailure) {
             return Text(state.message);

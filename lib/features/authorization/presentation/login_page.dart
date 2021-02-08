@@ -5,6 +5,7 @@ import 'package:doover_project_test/features/authorization/controllers/auth_bloc
 import 'package:doover_project_test/features/authorization/data/models/auth.dart';
 import 'package:doover_project_test/features/authorization/presentation/widgets/text_field_card.dart';
 import 'package:doover_project_test/main_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -46,22 +47,26 @@ class LoginPage extends StatelessWidget {
                 SizedBox(
                   height: 43,
                   width: 343,
-                  child: FlatButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius:
-                      BorderRadius.circular(6.0)
-                    ),
+                  child: CupertinoButton(
+                    // shape: RoundedRectangleBorder(
+                    //   borderRadius:
+                    //   BorderRadius.circular(6.0)
+                    // ),
+                    padding: EdgeInsets.all(0),
+                    borderRadius: BorderRadius.circular(6),
                     color: DooverColors.kButtonColor,
                     onPressed: () {
                       Auth auth = Auth('inzgiba', usernameController.text, passwordController.text);
                       BlocProvider.of<AuthBloc>(context).add(AuthSubmitted(auth));
                     },
                     child: state is AuthLoading ? SizedBox(
-                        height: 25,
-                        width: 25,
-                        child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                        ),
+                        height: 24,
+                        width: 24,
+                        child: Theme(
+                          data: ThemeData(
+                            cupertinoOverrideTheme: CupertinoThemeData(brightness: Brightness.dark)),
+                          child: CupertinoActivityIndicator(),
+                      ),
                     ) : Text(
                       'Войти',
                       style: DooverTextStyles.kLogInTextStyle,

@@ -4,6 +4,7 @@ import 'package:doover_project_test/features/laundry/presentation/screens/produc
 import 'package:doover_project_test/features/laundry/presentation/widgets/laundry_card.dart';
 import 'package:doover_project_test/features/laundry/presentation/widgets/product_card.dart';
 import 'package:doover_project_test/features/laundry/presentation/widgets/search_card.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:doover_project_test/features/laundry/controllers/laundry_bloc/laundry_bloc.dart';
@@ -24,7 +25,7 @@ class LaundryListView extends StatelessWidget {
             BlocBuilder<LaundryBloc, LaundryState>(
               builder: (context, state) {
                 if (state is LaundryLoading) {
-                  return Center(child: CircularProgressIndicator());
+                  return Center(child: CupertinoActivityIndicator(radius: 15,));
                 }
 
                 if (state is LaundryFailure) {
@@ -38,7 +39,7 @@ class LaundryListView extends StatelessWidget {
                       itemBuilder: (context, index) =>
                           Padding(
                             padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-                            child: FlatButton(
+                            child: CupertinoButton(
                                 padding: EdgeInsets.zero,
                                 onPressed: () {
                                   Navigator.of(context).push(

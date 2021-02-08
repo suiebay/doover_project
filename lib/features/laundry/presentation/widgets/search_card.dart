@@ -1,6 +1,7 @@
 import 'package:doover_project_test/core/consts/colors.dart';
 import 'package:doover_project_test/core/consts/padding.dart';
 import 'package:doover_project_test/core/consts/text_styles.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,6 +18,7 @@ class SearchCard extends StatefulWidget {
 
 class _SearchCardState extends State<SearchCard> {
   bool cancel = false;
+  bool cancelWord = false;
 
   onTextChanged(String text) async {
     BlocProvider.of<LaundryBloc>(context).add(LaundrySearchActivated(text));
@@ -30,6 +32,18 @@ class _SearchCardState extends State<SearchCard> {
     });
   }
 
+  onTextTap() async {
+    setState(() {
+      cancelWord = true;
+    });
+  }
+
+  @override
+  void initState() {
+    widget.controller.text = '';
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -40,7 +54,7 @@ class _SearchCardState extends State<SearchCard> {
             children: [
               Container(
                 height: 36,
-                width: cancel == false
+                width: cancelWord == false
                     ? MediaQuery.of(context).size.width
                     : MediaQuery.of(context).size.width - 110,
                 decoration: BoxDecoration(
@@ -58,6 +72,7 @@ class _SearchCardState extends State<SearchCard> {
                     Container(
                       width: MediaQuery.of(context).size.width - 180,
                       child: TextField(
+
                         inputFormatters: [LengthLimitingTextInputFormatter(20)],
                         controller: widget.controller,
                         style: DooverTextStyles.kOnSearchTextStyle,
@@ -65,7 +80,8 @@ class _SearchCardState extends State<SearchCard> {
                           hintText: 'Найти вещь',
                           hintStyle: DooverTextStyles.kLogInHintTextStyle,
                           border: InputBorder.none),
-                        onChanged: onTextChanged
+                        onChanged: onTextChanged,
+                        onTap: onTextTap,
                       ),
                     ),
                     widget.controller.text != '' ? InkWell(
@@ -84,22 +100,25 @@ class _SearchCardState extends State<SearchCard> {
                   ],
                 ),
               ),
-              cancel == true ? Positioned(
+              cancelWord == true ? Positioned(
                 right: 0,
-                  top: 8,
-                  child: InkWell(
-                    onTap: () {
-                      setState(() {
-                        widget.controller.text = '';
-                        cancel = false;
-                      });
-                      BlocProvider.of<LaundryBloc>(context).add(LaundryLoaded());
-                    },
-                    child: Text(
-                      'Отменить',
-                      style: DooverTextStyles.kCancelTextStyle,
-                    ),
-                  )
+                bottom: -3,
+                child: CupertinoButton(
+                  padding: EdgeInsets.all(0),
+                  onPressed: () {
+                    setState(() {
+                      widget.controller.text = '';
+                      cancel = false;
+                      cancelWord = false;
+                      FocusScope.of(context).unfocus();
+                    });
+                    BlocProvider.of<LaundryBloc>(context).add(LaundryLoaded());
+                  },
+                  child: Text(
+                    'Отменить',
+                    style: DooverTextStyles.kCancelTextStyle,
+                  ),
+                )
               ) : Container()
             ],
           ),

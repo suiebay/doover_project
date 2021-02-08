@@ -2,6 +2,7 @@ import 'package:doover_project_test/core/consts/colors.dart';
 import 'package:doover_project_test/core/consts/text_styles.dart';
 import 'package:doover_project_test/features/laundry/data/models/laundry.dart';
 import 'package:doover_project_test/features/laundry/presentation/widgets/product_card.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
@@ -21,6 +22,7 @@ class _BasketPageState extends State<BasketPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: DooverColors.kScaffoldBackgroundColor,
       appBar: AppBar(
         title: Text(
           'Корзина',
@@ -36,8 +38,9 @@ class _BasketPageState extends State<BasketPage> {
           Padding(
             padding: EdgeInsets.only(right: 16),
             child: Center(
-              child: InkWell(
-                onTap: () {
+              child: CupertinoButton(
+                padding: EdgeInsets.all(0),
+                onPressed: () {
                   setState(() {
                     box.clear();
                     sumBox.put('sum', 0);
@@ -55,7 +58,7 @@ class _BasketPageState extends State<BasketPage> {
       body: Stack(
         children: [
           Padding(
-            padding: EdgeInsets.only(bottom: 130),
+            padding: EdgeInsets.fromLTRB(0, 16, 0, 130),
             child: ListView.builder(
               padding: EdgeInsets.zero,
               itemBuilder: (context, index) {
@@ -96,11 +99,9 @@ class _BasketPageState extends State<BasketPage> {
                       SizedBox(
                         height: 43,
                         width: 343,
-                        child: FlatButton(
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                              BorderRadius.circular(6.0)
-                          ),
+                        child: CupertinoButton(
+                          padding: EdgeInsets.all(0),
+                          borderRadius: BorderRadius.circular(6),
                           color: DooverColors.kButtonColor,
                           onPressed: () {
 
