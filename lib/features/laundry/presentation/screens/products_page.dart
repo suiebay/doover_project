@@ -8,14 +8,30 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:doover_project_test/features/laundry/controllers/laundry_bloc/laundry_bloc.dart';
 import 'package:hive/hive.dart';
 
-class ProductsPage extends StatelessWidget {
-  final String title;
-  final box = Hive.box<Laundry>('basket');
+// class  GKey {
+//   static var x;
+//   static void back() {
+//     print(x);
+//     if(x != null) {
+//       Navigator.pop(x);
+//     }
+//   }
+// }
 
+class ProductsPage extends StatefulWidget {
+  final String title;
   ProductsPage({Key key, this.title}) : super(key: key);
 
   @override
+  _ProductsPageState createState() => _ProductsPageState();
+}
+
+class _ProductsPageState extends State<ProductsPage> {
+  final box = Hive.box<Laundry>('basket');
+
+  @override
   Widget build(BuildContext context) {
+    // GKey.x = context;
     return Scaffold(
       backgroundColor: DooverColors.kScaffoldBackgroundColor,
       appBar: PreferredSize(
@@ -23,7 +39,7 @@ class ProductsPage extends StatelessWidget {
           MediaQuery.of(context).size.width,
           kToolbarHeight,
         ),
-        child: DooverAppBar(title),
+        child: DooverAppBar(widget.title),
       ),
       body: BlocBuilder<LaundryBloc, LaundryState>(
         builder: (context, state) {
@@ -36,18 +52,24 @@ class ProductsPage extends StatelessWidget {
 
           if(state is LaundryProductsSuccess) {
             return Padding(
-              padding: EdgeInsets.symmetric(vertical: 16),
-              child: ListView.builder(
-                padding: EdgeInsets.zero,
-                itemBuilder: (context, index) {
-                  if(box.containsKey(state.products[index].productId)) {
-                    Laundry boxProduct = box.get(state.products[index].productId);
-                    return ProductCard(boxProduct);
-                  } else {
-                    return ProductCard(state.products[index]);
-                  }
-                },
-                itemCount: state.products.length,
+              padding: EdgeInsets.only(top: 16, bottom: 4),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      padding: EdgeInsets.zero,
+                      itemBuilder: (context, index) {
+                        if(box.containsKey(state.products[index].productId)) {
+                          Laundry boxProduct = box.get(state.products[index].productId);
+                          return ProductCard(boxProduct);
+                        } else {
+                          return ProductCard(state.products[index]);
+                        }
+                      },
+                      itemCount: state.products.length,
+                    ),
+                  ),
+                ],
               ),
             );
           }

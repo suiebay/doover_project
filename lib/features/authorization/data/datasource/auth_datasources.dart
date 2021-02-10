@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:doover_project_test/core/app_interceptors.dart';
 import 'package:doover_project_test/core/config.dart';
 import 'package:doover_project_test/features/authorization/data/models/auth.dart';
 
@@ -43,6 +44,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
 
   @override
   Future<Response> refreshToken(String refresh) async {
+    dio.interceptors.add(AppInterceptors());
     Response response = await dio.post(
       'refresh/',
       data: jsonEncode(<String, String>{'refresh': refresh}),

@@ -1,6 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:doover_project_test/features/authorization/data/models/auth.dart';
 import 'package:doover_project_test/features/authorization/data/models/token.dart';
 import 'package:doover_project_test/features/authorization/data/repositories/auth_repository.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'auth_state.dart';
@@ -30,10 +32,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final Token tokens = await authRepository.getTokens(event.auth);
 
       yield AuthSuccess(tokens);
-    } on Exception catch (e) {
+    } on DioError catch (e) {
       yield AuthFailure(e.toString());
-      throw (e);
+    } catch (e, s) {
+      debugPrintStack(label: e, stackTrace: s);
 
+      // TODO: IMlsdjnfoividvjpi
     }
   }
 

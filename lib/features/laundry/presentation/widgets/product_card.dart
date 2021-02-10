@@ -9,7 +9,7 @@ import 'bottom_sheet.dart';
 
 class ProductCard extends StatefulWidget {
   final Laundry product;
-  final Function notifyParent;
+  final void Function() notifyParent;
 
   const ProductCard(this.product, {Key key, this.notifyParent}) : super(key: key);
 
@@ -135,7 +135,7 @@ class _ProductCardState extends State<ProductCard> {
                               style: DooverTextStyles.kNumbersTextStyle,
                             ),
                           ),
-                        ) : Container(),
+                        ) : Offstage(),
                         SizedBox(width: 12),
                         widget.product.counter > 0 ? InkWell(
                           onTap: () {

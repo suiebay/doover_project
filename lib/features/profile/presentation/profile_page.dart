@@ -5,24 +5,27 @@ import 'package:doover_project_test/core/widgets/divider.dart';
 import 'package:doover_project_test/features/authorization/presentation/login_page.dart';
 import 'package:doover_project_test/features/laundry/data/models/laundry.dart';
 import 'package:doover_project_test/features/profile/controllers/profile_bloc/profile_bloc.dart';
+import 'package:doover_project_test/features/profile/data/models/user.dart';
 import 'package:doover_project_test/features/profile/presentation/widgets/data_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
 
-class ProfilePage extends StatefulWidget {
-  @override
-  _ProfilePageState createState() => _ProfilePageState();
-}
+class ProfilePage extends StatelessWidget {
+  User profile;
 
-class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => getIt<ProfileBloc>()..add(ProfileLoaded()),
+      create: (_) => getIt<ProfileBloc>()..add(ProfileLoaded(profile)),
       child: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) {
+          // print(profile);
+          if(state is ProfileSuccess) {
+            profile = state.profile;
+            // print(profile);
+          }
           return Scaffold(
             backgroundColor: DooverColors.kScaffoldBackgroundColor,
             appBar: PreferredSize(
@@ -41,7 +44,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ? Column(
               children: [
                 SizedBox(height: 25),
-                DataCard('Уведомления', value: state.profile.settings.notify),
+                DataCard('Уведомления', value: Hive.box('auth').get('notify')),
                 DooverDivider(),
                 FlatButton(
                   padding: EdgeInsets.symmetric(horizontal: 0),

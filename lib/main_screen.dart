@@ -1,8 +1,10 @@
 import 'package:doover_project_test/core/widgets/nav_bar_item_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'core/consts/colors.dart';
 import 'features/basket/presentation/basket_page.dart';
+import 'features/laundry/presentation/screens/products_page.dart';
 import 'features/laundry/presentation/widgets/laundry_list_view.dart';
 import 'features/profile/presentation/profile_page.dart';
 
@@ -18,33 +20,47 @@ class _MainScreenState extends State<MainScreen> {
     BasketPage()
   ];
 
-  void refresh(int currentView) {
-    setState(() {
-      _currentView = currentView;
-    });
-  }
-
   int _currentView = 0;
+  int _lastView;
+  bool onMain = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: DooverColors.kScaffoldBackgroundColor,
-      body: Stack(children: [_bodyWidgets.elementAt(_currentView)]),
+      body: _currentView == 0 ? Navigator(
+        onGenerateRoute: (routeSettings) {
+          return CupertinoPageRoute(
+            builder: (context) => _bodyWidgets.elementAt(_currentView),
+          );
+        },
+      ) : _bodyWidgets.elementAt(_currentView),
+
       bottomNavigationBar: Material(
         elevation: 30,
-        child: Container(
-            height: 53,
-            color: Colors.white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                NavBarItemWidget('assets/laundry.svg', 'Прачечная', _currentView, refresh: refresh),
-                NavBarItemWidget('assets/profile.svg', 'Профиль', _currentView, refresh: refresh),
-                NavBarItemWidget('assets/basket.svg', 'Корзина', _currentView, refresh: refresh),
-              ],
-            )
+        child: CupertinoTabBar(
+          backgroundColor: DooverColors.kCardBackgroundColor,
+          border: Border(top: BorderSide(color: Colors.transparent)),
+          onTap: (int index) {
+            setState(() {
+              _lastView = _currentView;
+              _currentView = index;
+              // if(_lastView == _currentView) {
+              //   GKey.back();
+              // }
+            });
+          },
+          items: [
+            BottomNavigationBarItem(
+              icon: NavBarItemWidget('assets/laundry.svg', 'Прачечная', _currentView),
+            ),
+            BottomNavigationBarItem(
+              icon: NavBarItemWidget('assets/profile.svg', 'Профиль', _currentView),
+            ),
+            BottomNavigationBarItem(
+              icon: NavBarItemWidget('assets/basket.svg', 'Корзина', _currentView),
+            ),
+          ],
         ),
       ),
     );

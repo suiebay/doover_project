@@ -24,15 +24,22 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       ProfileLoaded event,
       ProfileState state
       ) async* {
-    yield ProfileLoading();
+    if(event.profile == null) {
+      print(event.profile);
+      yield ProfileLoading();
+    }
 
     try {
-      final User profile = await profileRepository.getUsersMe();
+      if(event.profile == null) {
+        final User profile = await profileRepository.getUsersMe();
 
-      Hive.box('auth').put('username', profile.username);
-      Hive.box('auth').put('notify', profile.settings.notify);
+        Hive.box('auth').put('username', profile.username);
+        Hive.box('auth').put('notify', profile.settings.notify);
 
-      yield ProfileSuccess(profile);
+        yield ProfileSuccess(profile);
+      } else {
+        yield ProfileSuccess(event.profile);
+      }
     } on Exception catch (e) {
       yield ProfileFailure(e.toString());
       throw (e);

@@ -13,6 +13,10 @@ import 'package:get_it/get_it.dart';
 final getIt = GetIt.instance;
 
 void setupInjections() {
+  // getIt.registerLazySingleton<AppInterceptors>(
+  //       () => AppInterceptors(getIt()),
+  // );
+
   getIt.registerLazySingleton<LaundryRemoteDataSource>(
         () => LaundryRemoteDataSourceImpl(),
   );

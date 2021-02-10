@@ -15,8 +15,9 @@ void main() async {
   await Hive.openBox<Laundry>('basket');
   var sumBox = await Hive.openBox<double>('global');
   if(sumBox.isEmpty) { sumBox.put('sum', 0); }
-  print(Hive.box<Laundry>('basket').values);
+
   setupInjections();
+
   runApp(MyApp());
 }
 

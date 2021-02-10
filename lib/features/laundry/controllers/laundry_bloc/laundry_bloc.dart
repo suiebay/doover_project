@@ -21,6 +21,8 @@ class LaundryBloc extends Bloc<LaundryEvent, LaundryState> {
       yield* _mapLaundryProductsLoadedToState(event, state);
     } else if(event is LaundrySearchActivated) {
       yield* _mapLaundrySearchActivatedToState(event, state);
+    } else if(event is LaundryClean) {
+      yield* _mapLaundryCleanActivatedToState();
     }
   }
 
@@ -28,12 +30,16 @@ class LaundryBloc extends Bloc<LaundryEvent, LaundryState> {
       LaundryLoaded event,
       LaundryState state
     ) async* {
-    yield LaundryLoading();
-
+    if(event.categories == null)
+      yield LaundryLoading();
     try {
-      final List<Category> products = await laundryRepository.getCategories();
+      if(event.categories == null) {
+        final List<Category> products = await laundryRepository.getCategories();
 
-      yield LaundrySuccess(products);
+        yield LaundrySuccess(products);
+      } else {
+        yield LaundrySuccess(event.categories);
+      }
     } on Exception catch (e) {
       yield LaundryFailure(e.toString());
       throw (e);
@@ -53,7 +59,7 @@ class LaundryBloc extends Bloc<LaundryEvent, LaundryState> {
       yield LaundryProductsSuccess(products);
     } on Exception catch (e) {
       yield LaundryFailure(e.toString());
-      throw (e);
+      // throw (e);
 
     }
   }
@@ -73,6 +79,10 @@ class LaundryBloc extends Bloc<LaundryEvent, LaundryState> {
       throw (e);
 
     }
+  }
+
+  Stream<LaundryState> _mapLaundryCleanActivatedToState () async* {
+    yield LaundryInitial();
   }
 
 }

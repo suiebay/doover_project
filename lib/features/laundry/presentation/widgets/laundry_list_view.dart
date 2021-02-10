@@ -1,4 +1,5 @@
 import 'package:doover_project_test/core/injection_container.dart';
+import 'package:doover_project_test/features/laundry/data/models/category.dart';
 import 'package:doover_project_test/features/laundry/data/models/laundry.dart';
 import 'package:doover_project_test/features/laundry/presentation/screens/products_page.dart';
 import 'package:doover_project_test/features/laundry/presentation/widgets/laundry_card.dart';
@@ -13,15 +14,16 @@ import 'package:hive/hive.dart';
 class LaundryListView extends StatelessWidget {
   final TextEditingController controller = new TextEditingController();
   final box = Hive.box<Laundry>('basket');
+  List<Category> categories;
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: BlocProvider(
-        create: (_) => getIt<LaundryBloc>()..add(LaundryLoaded()),
+        create: (_) => getIt<LaundryBloc>()..add(LaundryLoaded(categories)),
         child: Stack(
           children: [
-            SearchCard(controller),
+            SearchCard(controller, categories),
             BlocBuilder<LaundryBloc, LaundryState>(
               builder: (context, state) {
                 if (state is LaundryLoading) {
@@ -33,6 +35,7 @@ class LaundryListView extends StatelessWidget {
                 }
 
                 if (state is LaundrySuccess) {
+                  categories = state.categories;
                   return Container(
                     margin: EdgeInsets.only(top: 60),
                     child: ListView.separated(
@@ -52,6 +55,7 @@ class LaundryListView extends StatelessWidget {
                                           ),
                                     ),
                                   );
+                                  // GKey.x = null;
                                 },
                                 child: CategoryCard(state.categories[index])
                             ),
@@ -71,7 +75,6 @@ class LaundryListView extends StatelessWidget {
                       child: ListView.builder(
                         padding: EdgeInsets.zero,
                         itemBuilder: (context, index) {
-                          print(box.containsKey(state.products[index].productId));
                           if(box.containsKey(state.products[index].productId)) {
                             Laundry boxProduct = box.get(state.products[index].productId);
                             return ProductCard(boxProduct);
