@@ -44,6 +44,7 @@ class _BasketPageState extends State<BasketPage> {
                   setState(() {
                     box.clear();
                     sumBox.put('sum', 0);
+                    sumBox.put('number', 0);
                   });
                 },
                 child: Hive.box<Laundry>('basket').isNotEmpty ? Text(
@@ -89,7 +90,7 @@ class _BasketPageState extends State<BasketPage> {
                           Padding(
                             padding: const EdgeInsets.only(top: 2),
                             child: Text(
-                              '${box.values.length} вещи',
+                              '${sumBox.get('number').toInt()} вещи',
                               style: DooverTextStyles.kNumbersTextStyle,
                             ),
                           ),

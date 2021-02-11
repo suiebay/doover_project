@@ -46,7 +46,7 @@ class LaundryListView extends StatelessWidget {
                                 padding: EdgeInsets.zero,
                                 onPressed: () {
                                   Navigator.of(context).push(
-                                    MaterialPageRoute(
+                                    CupertinoPageRoute(
                                       builder: (context) => BlocProvider(
                                             create: (_) => getIt<LaundryBloc>()..add(LaundryProductsLoaded(
                                                   state.categories[index].categoryId)),
@@ -55,7 +55,6 @@ class LaundryListView extends StatelessWidget {
                                           ),
                                     ),
                                   );
-                                  // GKey.x = null;
                                 },
                                 child: CategoryCard(state.categories[index])
                             ),

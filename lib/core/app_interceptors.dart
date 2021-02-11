@@ -31,8 +31,6 @@ class AppInterceptors extends Interceptor {
         if(response.statusCode == 200) {
           Hive.box('auth').put('access', response.data['access']);
           Hive.box('auth').put('refresh', response.data['refresh']);
-
-          print('reloaded');
         }
       }
     }

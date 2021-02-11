@@ -25,7 +25,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       ProfileState state
       ) async* {
     if(event.profile == null) {
-      print(event.profile);
       yield ProfileLoading();
     }
 

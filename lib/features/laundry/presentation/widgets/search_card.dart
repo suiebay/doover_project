@@ -97,7 +97,7 @@ class _SearchCardState extends State<SearchCard> {
                           widget.controller.text = '';
                           cancel = false;
                         });
-                        BlocProvider.of<LaundryBloc>(context).add(LaundryLoaded(widget.categories));
+                        BlocProvider.of<LaundryBloc>(context).add(LaundryClean());
                       },
                       child: Icon(
                         Icons.clear,

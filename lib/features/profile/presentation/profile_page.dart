@@ -21,10 +21,8 @@ class ProfilePage extends StatelessWidget {
       create: (_) => getIt<ProfileBloc>()..add(ProfileLoaded(profile)),
       child: BlocBuilder<ProfileBloc, ProfileState>(
         builder: (context, state) {
-          // print(profile);
           if(state is ProfileSuccess) {
             profile = state.profile;
-            // print(profile);
           }
           return Scaffold(
             backgroundColor: DooverColors.kScaffoldBackgroundColor,
@@ -50,7 +48,7 @@ class ProfilePage extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 0),
                   onPressed: () {
                     Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (BuildContext context) => LoginPage()),
+                      CupertinoPageRoute(builder: (BuildContext context) => LoginPage()),
                       ModalRoute.withName('/'),
                     );
                     Hive.box('auth').clear();

@@ -29,7 +29,6 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
     try {
       final settings  = await profileRepository.putUsersSettings(event.value);
       Hive.box('auth').put('notify', settings.notify);
-      print(settings.notify);
 
       yield NotificationSuccess(settings);
     } on Exception catch (e) {

@@ -32,9 +32,7 @@ class LoginPage extends StatelessWidget {
         child: BlocConsumer<AuthBloc, AuthState>(
           listener: (context, state) {
             if(state is AuthSuccess) {
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => MainScreen()),
-              );
+              Navigator.pushReplacementNamed(context, '/main_screen');
             }
           },
           builder: (context, state) {
@@ -48,10 +46,6 @@ class LoginPage extends StatelessWidget {
                   height: 43,
                   width: 343,
                   child: CupertinoButton(
-                    // shape: RoundedRectangleBorder(
-                    //   borderRadius:
-                    //   BorderRadius.circular(6.0)
-                    // ),
                     padding: EdgeInsets.all(0),
                     borderRadius: BorderRadius.circular(6),
                     color: DooverColors.kButtonColor,

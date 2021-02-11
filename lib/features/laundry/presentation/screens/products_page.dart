@@ -8,16 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:doover_project_test/features/laundry/controllers/laundry_bloc/laundry_bloc.dart';
 import 'package:hive/hive.dart';
 
-// class  GKey {
-//   static var x;
-//   static void back() {
-//     print(x);
-//     if(x != null) {
-//       Navigator.pop(x);
-//     }
-//   }
-// }
-
 class ProductsPage extends StatefulWidget {
   final String title;
   ProductsPage({Key key, this.title}) : super(key: key);
@@ -31,7 +21,6 @@ class _ProductsPageState extends State<ProductsPage> {
 
   @override
   Widget build(BuildContext context) {
-    // GKey.x = context;
     return Scaffold(
       backgroundColor: DooverColors.kScaffoldBackgroundColor,
       appBar: PreferredSize(

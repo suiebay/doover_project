@@ -45,9 +45,6 @@ class _MainScreenState extends State<MainScreen> {
             setState(() {
               _lastView = _currentView;
               _currentView = index;
-              // if(_lastView == _currentView) {
-              //   GKey.back();
-              // }
             });
           },
           items: [
