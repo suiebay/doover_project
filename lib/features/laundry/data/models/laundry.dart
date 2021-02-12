@@ -9,6 +9,7 @@ part 'laundry.g.dart';
 @JsonSerializable()
 class Laundry extends HiveObject{
   @HiveField(0)
+  @JsonKey(name: 'uuid')
   final String productId;
 
   @HiveField(1)
@@ -30,6 +31,7 @@ class Laundry extends HiveObject{
   final Hint hint;
 
   @HiveField(7)
+  @JsonKey(ignore: true, defaultValue: 0)
   int counter = 0;
 
   Laundry({this.productId, this.category, this.name, this.picture, this.price, this.duration, this.hint });
