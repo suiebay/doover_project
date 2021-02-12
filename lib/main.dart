@@ -17,7 +17,11 @@ void main() async {
 
   await Hive.openBox('auth');
   await Hive.openBox<Laundry>('basket');
-  await Hive.openBox<double>('global');
+  var sumBox = await Hive.openBox<double>('global');
+  if(sumBox.get('sum') == null || sumBox.get('number') == null) {
+    sumBox.put('sum', 0.0);
+    sumBox.put('number', 0.0);
+  }
 
   setupInjections();
 

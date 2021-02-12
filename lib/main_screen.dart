@@ -1,3 +1,4 @@
+import 'package:doover_project_test/core/config.dart';
 import 'package:doover_project_test/core/widgets/nav_bar_item_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+
   final List<Widget> _bodyWidgets = [
     LaundryListView(),
     ProfilePage(),
@@ -22,7 +24,6 @@ class _MainScreenState extends State<MainScreen> {
 
   int _currentView = 0;
   int _lastView;
-  bool onMain = true;
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +46,9 @@ class _MainScreenState extends State<MainScreen> {
             setState(() {
               _lastView = _currentView;
               _currentView = index;
+              if(_lastView == _currentView && _currentView == 0 && Global.x.toString().contains('state')) {
+                Global.back();
+              }
             });
           },
           items: [

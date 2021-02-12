@@ -1,3 +1,4 @@
+import 'package:doover_project_test/core/config.dart';
 import 'package:doover_project_test/core/consts/colors.dart';
 import 'package:doover_project_test/core/widgets/app_bar.dart';
 import 'package:doover_project_test/features/laundry/data/models/laundry.dart';
@@ -7,6 +8,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:doover_project_test/features/laundry/controllers/laundry_bloc/laundry_bloc.dart';
 import 'package:hive/hive.dart';
+
+class Global {
+  static var x;
+  static void back() {
+    Navigator.pop(x);
+  }
+}
 
 class ProductsPage extends StatefulWidget {
   final String title;
@@ -21,6 +29,7 @@ class _ProductsPageState extends State<ProductsPage> {
 
   @override
   Widget build(BuildContext context) {
+    Global.x = context;
     return Scaffold(
       backgroundColor: DooverColors.kScaffoldBackgroundColor,
       appBar: PreferredSize(

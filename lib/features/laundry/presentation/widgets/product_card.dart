@@ -117,7 +117,7 @@ class _ProductCardState extends State<ProductCard> {
                             setState(() {
                               widget.product.counter++;
                               sumBox.put('sum', sumBox.get('sum') + widget.product.price);
-                              sumBox.put('number', sumBox.get('number') + 1);
+                              sumBox.put('number', sumBox.get('number') + 1.0);
                               box.put(widget.product.productId, widget.product);
                               if (widget.notifyParent != null) widget.notifyParent();
                             });
@@ -143,7 +143,7 @@ class _ProductCardState extends State<ProductCard> {
                             setState(() {
                               widget.product.counter--;
                               sumBox.put('sum', sumBox.get('sum') - widget.product.price);
-                              sumBox.put('number', sumBox.get('number') - 1);
+                              sumBox.put('number', sumBox.get('number') - 1.0);
                               if (widget.product.counter != 0)
                                 box.put(widget.product.productId, widget.product);
                               else
